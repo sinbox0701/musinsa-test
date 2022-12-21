@@ -4,7 +4,7 @@ export interface GoodsType {
   brandLinkUrl: string;
   brandName: string;
   goodsName: string;
-  goodsNo: string;
+  goodsNo?: string;
   imageUrl: string;
   isExclusive: boolean;
   isSale: boolean;

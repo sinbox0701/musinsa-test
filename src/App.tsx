@@ -2,9 +2,11 @@ import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Goods from './components/Goods';
 import Layout from './components/Layout';
+import { useAppSelector } from './redux/app/hooks';
 import { GoodsType } from './types/interface';
 
 function App() {
+  const filters = useAppSelector((state) => state.filters);
   const [goodsList, setGoodsList] = useState<GoodsType[]>([]);
   const [hasData, setHasData] = useState<boolean>(true);
   const page = useRef<number>(0);
@@ -14,8 +16,8 @@ function App() {
     const { data } = await axios.get(
       `https://static.msscdn.net/musinsaUI/homework/data/goods${page.current}.json`
     );
-    setGoodsList((prev) => [...prev, ...data.data.list]);
     if (data) {
+      setGoodsList((prev) => [...prev, ...data.data.list]);
       page.current += 1;
     } else {
       setHasData(false);
