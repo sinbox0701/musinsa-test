@@ -20,10 +20,15 @@ export default function Goods({
   return (
     <div className="px-2 justify-between mb-2">
       <div className="mb-4 relative">
+        {isSoldOut ? (
+          <div className="bg-white opacity-80 text-[#777777] text-center py-24 absolute inset-0">
+            SOLD OUT
+          </div>
+        ) : null}
         <img
           className="h-56 w-full object-center"
           src={imageUrl}
-          alt="no item"
+          alt="goods"
           onError={onErrorImg}
         />
         {isExclusive ? (
