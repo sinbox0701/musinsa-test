@@ -1,4 +1,4 @@
-import { ItemProps } from '../types/interface';
+import { GoodsProps } from '../types/interface';
 
 export default function Goods({
   brandLinkUrl,
@@ -13,7 +13,7 @@ export default function Goods({
   normalPrice,
   price,
   saleRate,
-}: ItemProps) {
+}: GoodsProps) {
   const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = 'https://image.msscdn.net/musinsaUI/homework/data/img.jpg';
   };
@@ -25,13 +25,15 @@ export default function Goods({
       {isExclusive ? <div className="">단독</div> : null}
       <div className="space-y-2">
         <div className="text-sm font-normal">{brandName}</div>
-        <div className="font-bold">{goodsName}</div>
+        <div className="font-bold whitespace-nomal overflow-hidden text-ellipsis leading-6 h-12">
+          {goodsName}
+        </div>
         <div className="space-y-0">
           <div className="flex flex-row justify-between font-medium">
             <span>{normalPrice}원</span>
-            <span className="text-red-500">{saleRate}%</span>
+            {isSale ? <span className="text-red-500">{saleRate}%</span> : null}
           </div>
-          {isSale ? <div></div> : <div>{price}원</div>}
+          {isSale ? <div>{price}원</div> : null}
         </div>
       </div>
     </div>

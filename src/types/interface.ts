@@ -1,4 +1,4 @@
-export interface ItemProps {
+export interface GoodsProps {
   brandLinkUrl: string;
   brandName: string;
   goodsName: string;
@@ -12,6 +12,8 @@ export interface ItemProps {
   price: number;
   saleRate: number;
 }
+
+export interface GoodsType extends GoodsProps {}
 
 export interface LayoutProps {
   children: React.ReactNode;

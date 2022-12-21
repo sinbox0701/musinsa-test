@@ -1,18 +1,46 @@
-import { useQuery } from 'react-query';
+import axios from 'axios';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Goods from './components/Goods';
 import Layout from './components/Layout';
-import { getGoodsApi } from './libs/api';
-import { ItemProps } from './types/interface';
+import { GoodsType } from './types/interface';
 
 function App() {
-  const { data: goodsList } = useQuery(['getGoods'], () =>
-    getGoodsApi('https://static.msscdn.net/musinsaUI/homework/data/goods1.json')
-  );
-  console.log(goodsList?.data.list);
+  const [goodsList, setGoodsList] = useState<GoodsType[]>([]);
+  const [hasData, setHasData] = useState<boolean>(true);
+  const page = useRef<number>(0);
+  const observerTargetEl = useRef<HTMLDivElement>(null);
+
+  const fetch = useCallback(async () => {
+    const { data } = await axios.get(
+      `https://static.msscdn.net/musinsaUI/homework/data/goods${page.current}.json`
+    );
+    setGoodsList((prev) => [...prev, ...data.data.list]);
+    if (data) {
+      page.current += 1;
+    } else {
+      setHasData(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!observerTargetEl.current || !hasData) return;
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      if (entries[0].isIntersecting) {
+        fetch();
+      }
+    });
+    observer.observe(observerTargetEl.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [fetch, hasData]);
+
   return (
     <Layout>
       <div className="bg-white grid grid-cols-2">
-        {goodsList?.data.list.map((goods: ItemProps) => (
+        {goodsList.map((goods) => (
           <Goods
             key={goods.goodsNo}
             brandLinkUrl={goods.brandLinkUrl}
@@ -29,6 +57,7 @@ function App() {
             saleRate={goods.saleRate}
           />
         ))}
+        <div ref={observerTargetEl} />
       </div>
     </Layout>
   );

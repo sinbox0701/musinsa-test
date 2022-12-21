@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <div className="bg-white w-full max-w-xl py-2 fixed border-b top-0 flex flex-col items-center justify-center">
+    <div className="bg-white w-full max-w-xl py-2 fixed border-b top-0 flex flex-col items-center justify-center z-10">
       <div className="text-lg text-black font-medium mt-1 mb-2">MUSINSA</div>
       <div className="max-w-xl w-full flex px-1 justify-start items-center text-black text-sm md:max-w-md">
         <div className="border rounded-full flex items-center px-4 py-2 mr-1">
