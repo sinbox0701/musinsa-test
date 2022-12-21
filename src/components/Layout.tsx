@@ -1,14 +1,11 @@
+import { LayoutProps } from '../types/interface';
 import Header from './Header';
-
-interface LayoutProps {
-  children: React.ReactNode;
-}
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="bg-white flex justify-center">
+    <div className="bg-gray-400 flex flex-col justify-center items-center">
       <Header />
-      <div>{children}</div>
+      <div className="mt-28">{children}</div>
     </div>
   );
 }

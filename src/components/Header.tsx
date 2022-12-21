@@ -1,8 +1,8 @@
 export default function Header() {
   return (
-    <div className="w-full max-w-xl py-2 fixed border-b top-0 flex flex-col items-center justify-center">
-      <div className="text-lg text-black font-medium mt-1 mb-7">MUSINSA</div>
-      <div className="max-w-xl w-full flex px-1 justify-start items-center text-black text-sm">
+    <div className="bg-white w-full max-w-xl py-2 fixed border-b top-0 flex flex-col items-center justify-center">
+      <div className="text-lg text-black font-medium mt-1 mb-2">MUSINSA</div>
+      <div className="max-w-xl w-full flex px-1 justify-start items-center text-black text-sm md:max-w-md">
         <div className="border rounded-full flex items-center px-4 py-2 mr-1">
           <div>검색</div>
           <svg height="16" viewBox="0 0 48 48" width="16" xmlns="http://www.w3.org/2000/svg">
