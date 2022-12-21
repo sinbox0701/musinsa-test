@@ -1,4 +1,6 @@
-export interface GoodsProps {
+export interface GoodsProps extends GoodsType {}
+
+export interface GoodsType {
   brandLinkUrl: string;
   brandName: string;
   goodsName: string;
@@ -12,8 +14,6 @@ export interface GoodsProps {
   price: number;
   saleRate: number;
 }
-
-export interface GoodsType extends GoodsProps {}
 
 export interface LayoutProps {
   children: React.ReactNode;

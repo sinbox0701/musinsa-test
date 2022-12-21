@@ -18,23 +18,36 @@ export default function Goods({
     e.currentTarget.src = 'https://image.msscdn.net/musinsaUI/homework/data/img.jpg';
   };
   return (
-    <div className="px-2 justify-between relative">
-      <div className="mb-2">
-        <img className="h-56 object-fill" src={imageUrl} alt="no item" onError={onErrorImg} />
+    <div className="px-2 justify-between mb-2">
+      <div className="mb-4 relative">
+        <img
+          className="h-56 w-full object-center"
+          src={imageUrl}
+          alt="no item"
+          onError={onErrorImg}
+        />
+        {isExclusive ? (
+          <div className="absolute bottom-[-0.6rem] left-1 bg-[#18A286] text-white px-2 py-1 text-xs">
+            단독
+          </div>
+        ) : null}
       </div>
-      {isExclusive ? <div className="">단독</div> : null}
       <div className="space-y-2">
         <div className="text-sm font-normal">{brandName}</div>
         <div className="font-bold whitespace-nomal overflow-hidden text-ellipsis leading-6 h-12">
           {goodsName}
         </div>
-        <div className="space-y-0">
-          <div className="flex flex-row justify-between font-medium">
-            <span>{normalPrice}원</span>
-            {isSale ? <span className="text-red-500">{saleRate}%</span> : null}
+        {isSale ? (
+          <div className="space-y-0">
+            <div className="flex flex-row justify-between font-medium">
+              <span>{price}원</span>
+              <span className="text-red-500">{saleRate}%</span>
+            </div>
+            <div className="line-through text-gray-400 text-xs">{normalPrice}원</div>
           </div>
-          {isSale ? <div>{price}원</div> : null}
-        </div>
+        ) : (
+          <div>{normalPrice}원</div>
+        )}
       </div>
     </div>
   );
