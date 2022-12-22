@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Goods from './components/Goods';
 import Layout from './components/Layout';
@@ -11,16 +11,34 @@ function App() {
   const [hasData, setHasData] = useState<boolean>(true);
   const page = useRef<number>(0);
   const observerTargetEl = useRef<HTMLDivElement>(null);
+  const isExclusive = useRef<boolean>(false);
+  const isSale = useRef<boolean>(false);
+  const isSoldout = useRef<boolean>(false);
 
   const fetch = useCallback(async () => {
-    const { data } = await axios.get(
-      `https://static.msscdn.net/musinsaUI/homework/data/goods${page.current}.json`
-    );
-    if (data) {
-      setGoodsList((prev) => [...prev, ...data.data.list]);
-      page.current += 1;
-    } else {
-      setHasData(false);
+    try {
+      const { data } = await axios.get(
+        `https://static.msscdn.net/musinsaUI/homework/data/goods${page.current}.json`
+      );
+      if (data) {
+        setGoodsList((prev) => [...prev, ...data.data.list]);
+        if (isExclusive.current) {
+          setGoodsList((prev) => prev.filter((goods) => goods.isExclusive === true));
+        }
+        if (isSale.current) {
+          setGoodsList((prev) => prev.filter((goods) => goods.isSale === true));
+        }
+        if (!isSoldout.current) {
+          setGoodsList((prev) => prev.filter((goods) => goods.isSoldOut === false));
+        }
+        page.current += 1;
+      }
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        setHasData(false);
+      } else {
+        console.log(String(e));
+      }
     }
   }, []);
 
@@ -39,12 +57,46 @@ function App() {
     };
   }, [fetch, hasData]);
 
+  useEffect(() => {
+    setGoodsList([]);
+    if (filters.exclusive) {
+      isExclusive.current = true;
+    } else {
+      isExclusive.current = false;
+    }
+    setHasData(true);
+    page.current = 0;
+  }, [filters.exclusive]);
+
+  useEffect(() => {
+    setGoodsList([]);
+    if (filters.sales) {
+      isSale.current = true;
+    } else {
+      isSale.current = false;
+    }
+    setHasData(true);
+    page.current = 0;
+  }, [filters.sales]);
+
+  useEffect(() => {
+    setGoodsList([]);
+    if (filters.soldout) {
+      isSoldout.current = true;
+    } else {
+      isSoldout.current = false;
+    }
+    setHasData(true);
+    page.current = 0;
+    console.log(isExclusive.current);
+    console.log(page.current);
+  }, [filters.soldout]);
   return (
     <Layout>
       <div className="bg-white grid grid-cols-2">
-        {goodsList.map((goods) => (
+        {goodsList.map((goods, index) => (
           <Goods
-            key={goods.goodsNo}
+            key={index}
             brandLinkUrl={goods.brandLinkUrl}
             brandName={goods.brandName}
             goodsName={goods.goodsName}
