@@ -14,6 +14,8 @@ function App() {
   const isExclusive = useRef<boolean>(false);
   const isSale = useRef<boolean>(false);
   const isSoldout = useRef<boolean>(false);
+  const isSearch = useRef<boolean>(false);
+  const keyword = useRef<string>('');
 
   const fetch = useCallback(async () => {
     try {
@@ -30,6 +32,13 @@ function App() {
         }
         if (!isSoldout.current) {
           setGoodsList((prev) => prev.filter((goods) => goods.isSoldOut === false));
+        }
+        if (isSearch.current) {
+          setGoodsList((prev) =>
+            prev.filter((goods) =>
+              goods.goodsName.toLowerCase().includes(keyword.current.toLowerCase())
+            )
+          );
         }
         page.current += 1;
       }
@@ -58,37 +67,64 @@ function App() {
   }, [fetch, hasData]);
 
   useEffect(() => {
-    setGoodsList([]);
     if (filters.exclusive) {
       isExclusive.current = true;
     } else {
       isExclusive.current = false;
     }
+    setGoodsList([]);
     setHasData(true);
     page.current = 0;
-  }, [filters.exclusive]);
+    if (filters.exclusive === true && isExclusive.current === true) {
+      fetch();
+    }
+  }, [filters.exclusive, fetch]);
 
   useEffect(() => {
-    setGoodsList([]);
     if (filters.sales) {
       isSale.current = true;
     } else {
       isSale.current = false;
     }
+    setGoodsList([]);
     setHasData(true);
     page.current = 0;
-  }, [filters.sales]);
+    if (filters.sales === true && isSale.current === true) {
+      fetch();
+    }
+  }, [filters.sales, fetch]);
 
   useEffect(() => {
-    setGoodsList([]);
     if (filters.soldout) {
       isSoldout.current = true;
     } else {
       isSoldout.current = false;
     }
+    setGoodsList([]);
     setHasData(true);
     page.current = 0;
-  }, [filters.soldout]);
+    if (filters.soldout === true && isSoldout.current === true) {
+      fetch();
+    }
+  }, [filters.soldout, fetch]);
+
+  useEffect(() => {
+    if (filters.search) {
+      isSearch.current = true;
+    } else {
+      isSearch.current = false;
+    }
+  }, [filters.search]);
+
+  useEffect(() => {
+    if (keyword.current !== filters.keyword) {
+      keyword.current = filters.keyword;
+      setGoodsList([]);
+      setHasData(true);
+      page.current = 0;
+      fetch();
+    }
+  }, [filters.keyword, fetch]);
 
   return (
     <Layout>

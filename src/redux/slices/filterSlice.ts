@@ -6,6 +6,8 @@ const initialState: FilterState = {
   sales: false,
   exclusive: false,
   soldout: false,
+  keyword: '',
+  result: '',
 };
 
 export const filtersSlice = createSlice({
@@ -24,9 +26,16 @@ export const filtersSlice = createSlice({
     changeSoldout: (state) => {
       state.soldout = !state.soldout;
     },
+    search: (state, action: { payload: { keyword: string } }) => {
+      state.keyword = action.payload.keyword;
+    },
+    makeWord: (state, action: { payload: { keyword: string } }) => {
+      state.result = action.payload.keyword;
+    },
   },
 });
 
-export const { changeSearch, changeSales, changeExclusive, changeSoldout } = filtersSlice.actions;
+export const { changeSearch, changeSales, changeExclusive, changeSoldout, search, makeWord } =
+  filtersSlice.actions;
 
 export default filtersSlice.reducer;

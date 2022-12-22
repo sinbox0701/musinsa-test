@@ -1,3 +1,4 @@
+import { checkActivateResult } from '../libs/function';
 import { useAppDispatch, useAppSelector } from '../redux/app/hooks';
 import {
   changeExclusive,
@@ -5,6 +6,7 @@ import {
   changeSearch,
   changeSoldout,
 } from '../redux/slices/filterSlice';
+import ResultBar from './ResultBar';
 import SearchBar from './SearchBar';
 
 export default function Header() {
@@ -30,7 +32,7 @@ export default function Header() {
           </div>
           <div
             className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
-              filters.sales ? ' text-white bg-blue-500' : ''
+              filters.sales ? 'text-blue-500' : ''
             }`}
             onClick={() => dispatch(changeSales())}
           >
@@ -38,7 +40,7 @@ export default function Header() {
           </div>
           <div
             className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
-              filters.exclusive ? ' text-white bg-blue-500' : ''
+              filters.exclusive ? 'text-blue-500' : ''
             }`}
             onClick={() => dispatch(changeExclusive())}
           >
@@ -46,16 +48,19 @@ export default function Header() {
           </div>
           <div
             className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
-              filters.soldout ? ' text-white bg-blue-500' : ''
+              filters.soldout ? 'text-blue-500' : ''
             }`}
             onClick={() => dispatch(changeSoldout())}
           >
             <span>품절포함</span>
           </div>
         </div>
+        {checkActivateResult(filters.exclusive, filters.sales, filters.soldout, filters.result) ? (
+          <ResultBar />
+        ) : null}
       </div>
       {filters.search ? (
-        <div className="bg-[#E5E5E5] w-full py-4 fixed top-24 flex flex-col items-center justify-center z-10">
+        <div className="bg-[#E5E5E5] w-full py-4 fixed top-28 flex flex-col items-center justify-center z-10">
           <SearchBar />
         </div>
       ) : null}
