@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useAppDispatch } from '../redux/app/hooks';
+import { useAppDispatch, useAppSelector } from '../redux/app/hooks';
 import {
   changeExclusive,
   changeSales,
@@ -9,10 +8,7 @@ import {
 
 export default function Header() {
   const dispatch = useAppDispatch();
-  const [toggleSearch, setToggleSearch] = useState<boolean>(false);
-  const [toggleSales, setToggleSales] = useState<boolean>(false);
-  const [toggleExclusive, setToggleExclusive] = useState<boolean>(false);
-  const [toggleSoldout, setToggleSoldout] = useState<boolean>(false);
+  const filters = useAppSelector((state) => state.filters);
 
   return (
     <div className="bg-white w-full py-2 fixed border-b top-0 flex flex-col items-center justify-center z-10">
@@ -20,12 +16,9 @@ export default function Header() {
       <div className="max-w-xl w-full flex px-1 justify-start items-center text-black text-sm md:max-w-md">
         <div
           className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
-            toggleSearch ? ' text-white bg-blue-500' : ''
+            filters.search ? ' text-white bg-blue-500' : ''
           }`}
-          onClick={() => {
-            setToggleSearch((prev) => !prev);
-            dispatch(changeSearch());
-          }}
+          onClick={() => dispatch(changeSearch())}
         >
           <div>검색</div>
           <svg height="16" viewBox="0 0 48 48" width="16" xmlns="http://www.w3.org/2000/svg">
@@ -35,34 +28,25 @@ export default function Header() {
         </div>
         <div
           className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
-            toggleSales ? ' text-white bg-blue-500' : ''
+            filters.sales ? ' text-white bg-blue-500' : ''
           }`}
-          onClick={() => {
-            setToggleSales((prev) => !prev);
-            dispatch(changeSales());
-          }}
+          onClick={() => dispatch(changeSales())}
         >
           <span>세일상품</span>
         </div>
         <div
           className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
-            toggleExclusive ? ' text-white bg-blue-500' : ''
+            filters.exclusive ? ' text-white bg-blue-500' : ''
           }`}
-          onClick={() => {
-            setToggleExclusive((prev) => !prev);
-            dispatch(changeExclusive());
-          }}
+          onClick={() => dispatch(changeExclusive())}
         >
           <span>단독상품</span>
         </div>
         <div
           className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
-            toggleSoldout ? ' text-white bg-blue-500' : ''
+            filters.soldout ? ' text-white bg-blue-500' : ''
           }`}
-          onClick={() => {
-            setToggleSoldout((prev) => !prev);
-            dispatch(changeSoldout());
-          }}
+          onClick={() => dispatch(changeSoldout())}
         >
           <span>품절포함</span>
         </div>
