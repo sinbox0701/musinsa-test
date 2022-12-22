@@ -88,9 +88,8 @@ function App() {
     }
     setHasData(true);
     page.current = 0;
-    console.log(isExclusive.current);
-    console.log(page.current);
   }, [filters.soldout]);
+
   return (
     <Layout>
       <div className="bg-white grid grid-cols-2">
