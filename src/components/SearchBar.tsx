@@ -56,8 +56,9 @@ export default function SearchBar() {
 
       {results.length > 0 ? (
         <div className="mt-1 flex flex-col items-start space-y-1 w-80">
-          {results.map((result) => (
+          {results.map((result, index) => (
             <div
+              key={index}
               className="bg-blue-500 text-xs font-thin text-white p-1 rounded-lg whitespace-nowrap overflow-hidden text-ellipsis w-48"
               onClick={() => dispatch(makeWord({ keyword: result }))}
             >
