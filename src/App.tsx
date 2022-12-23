@@ -22,7 +22,6 @@ function App() {
 
   const fetch = useCallback(async () => {
     try {
-      console.log('page: ' + page);
       const { data } = await axios.get(
         `https://static.msscdn.net/musinsaUI/homework/data/goods${page}.json`
       );

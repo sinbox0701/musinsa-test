@@ -17,7 +17,6 @@ import SearchBar from './SearchBar';
 export default function Header() {
   const dispatch = useAppDispatch();
   const filters = useAppSelector((state) => state.filters);
-  console.log(filters.keywords);
   const onClickSearch = () => {
     if (!(filters.exclusive || filters.sales || filters.soldout)) {
       if (filters.search) {
