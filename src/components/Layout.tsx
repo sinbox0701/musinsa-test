@@ -11,9 +11,14 @@ export default function Layout({ children }: LayoutProps) {
       <Header />
       <div
         className={`${
-          filters.search && filters.result === ''
+          filters.isSearch && filters.result === ''
             ? 'mt-[12rem]'
-            : checkActivateResult(filters.exclusive, filters.sales, filters.soldout, filters.result)
+            : checkActivateResult(
+                filters.isExclusive,
+                filters.isSales,
+                filters.isSoldout,
+                filters.result
+              )
             ? 'mt-36'
             : 'mt-28'
         }`}

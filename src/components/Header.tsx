@@ -19,8 +19,8 @@ export default function Header() {
   const filters = useAppSelector((state) => state.filters);
 
   const onClickSearch = () => {
-    if (!(filters.exclusive || filters.sales || filters.soldout)) {
-      if (filters.search) {
+    if (!(filters.isExclusive || filters.isSales || filters.isSoldout)) {
+      if (filters.isSearch) {
         dispatch(deactivateSearch());
       } else {
         dispatch(activateSearch());
@@ -30,8 +30,8 @@ export default function Header() {
   };
 
   const onClickSales = () => {
-    if (filters.search === false || filters.result !== '') {
-      if (filters.sales) {
+    if (filters.isSearch === false || filters.result !== '') {
+      if (filters.isSales) {
         dispatch(deactivateSales());
       } else {
         dispatch(activateSales());
@@ -40,8 +40,8 @@ export default function Header() {
   };
 
   const onClickExclusive = () => {
-    if (filters.search === false || filters.result !== '') {
-      if (filters.exclusive) {
+    if (filters.isSearch === false || filters.result !== '') {
+      if (filters.isExclusive) {
         dispatch(deactivateExclusive());
       } else {
         dispatch(activateExclusive());
@@ -50,8 +50,8 @@ export default function Header() {
   };
 
   const onClickSoldout = () => {
-    if (filters.search === false || filters.result !== '') {
-      if (filters.soldout) {
+    if (filters.isSearch === false || filters.result !== '') {
+      if (filters.isSoldout) {
         dispatch(deactivateSoldout());
       } else {
         dispatch(activateSoldout());
@@ -66,7 +66,7 @@ export default function Header() {
         <div className="max-w-xl w-full flex px-1 justify-start items-center text-black text-sm md:max-w-md">
           <div
             className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
-              filters.search
+              filters.isSearch
                 ? filters.result === ''
                   ? 'text-white bg-blue-500'
                   : 'text-blue-500'
@@ -82,7 +82,7 @@ export default function Header() {
           </div>
           <div
             className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
-              filters.sales ? 'text-blue-500' : ''
+              filters.isSales ? 'text-blue-500' : ''
             }`}
             onClick={onClickSales}
           >
@@ -90,7 +90,7 @@ export default function Header() {
           </div>
           <div
             className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
-              filters.exclusive ? 'text-blue-500' : ''
+              filters.isExclusive ? 'text-blue-500' : ''
             }`}
             onClick={onClickExclusive}
           >
@@ -98,21 +98,31 @@ export default function Header() {
           </div>
           <div
             className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
-              filters.soldout ? 'text-blue-500' : ''
+              filters.isSoldout ? 'text-blue-500' : ''
             }`}
             onClick={onClickSoldout}
           >
             <span>품절포함</span>
           </div>
         </div>
-        {checkActivateResult(filters.exclusive, filters.sales, filters.soldout, filters.result) ? (
+        {checkActivateResult(
+          filters.isExclusive,
+          filters.isSales,
+          filters.isSoldout,
+          filters.result
+        ) ? (
           <ResultBar />
         ) : null}
       </div>
-      {filters.search && filters.result === '' ? (
+      {filters.isSearch && filters.result === '' ? (
         <div
           className={`bg-[#E5E5E5] w-full py-4 fixed  flex flex-col items-center justify-center z-10 ${
-            checkActivateResult(filters.exclusive, filters.sales, filters.soldout, filters.result)
+            checkActivateResult(
+              filters.isExclusive,
+              filters.isSales,
+              filters.isSoldout,
+              filters.result
+            )
               ? 'top-[7.5rem]'
               : 'top-[5.8rem]'
           }`}

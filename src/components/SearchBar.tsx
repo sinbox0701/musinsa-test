@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/app/hooks';
-import { makeWord } from '../redux/slices/filterSlice';
+import { makeResult } from '../redux/slices/filterSlice';
 // import { makeWord, search } from '../redux/slices/filterSlice';
 
 export default function SearchBar() {
@@ -47,7 +47,7 @@ export default function SearchBar() {
           placeholder="상품명 검색"
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
-              dispatch(makeWord({ keyword: word }));
+              dispatch(makeResult({ keyword: word }));
             }
           }}
           onChange={(e) => autoResult(e)}
@@ -60,7 +60,7 @@ export default function SearchBar() {
             <div
               key={index}
               className="bg-blue-500 text-xs font-thin text-white p-1 rounded-lg whitespace-nowrap overflow-hidden text-ellipsis w-48"
-              onClick={() => dispatch(makeWord({ keyword: result }))}
+              onClick={() => dispatch(makeResult({ keyword: result }))}
             >
               {result}
             </div>

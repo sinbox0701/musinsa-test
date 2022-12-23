@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { FilterState } from './types';
 
 const initialState: FilterState = {
-  search: false,
-  sales: false,
-  exclusive: false,
-  soldout: false,
+  isSearch: false,
+  isSales: false,
+  isExclusive: false,
+  isSoldout: false,
   keywords: [],
   result: '',
 };
@@ -15,34 +15,34 @@ export const filtersSlice = createSlice({
   initialState,
   reducers: {
     activateSearch: (state) => {
-      state.search = true;
+      state.isSearch = true;
     },
     deactivateSearch: (state) => {
-      state.search = false;
+      state.isSearch = false;
     },
     activateSales: (state) => {
-      state.sales = true;
+      state.isSales = true;
     },
     deactivateSales: (state) => {
-      state.sales = false;
+      state.isSales = false;
     },
     activateExclusive: (state) => {
-      state.exclusive = true;
+      state.isExclusive = true;
     },
     deactivateExclusive: (state) => {
-      state.exclusive = false;
+      state.isExclusive = false;
     },
     activateSoldout: (state) => {
-      state.soldout = true;
+      state.isSoldout = true;
     },
     deactivateSoldout: (state) => {
-      state.soldout = false;
+      state.isSoldout = false;
     },
     resetFilter: (state) => {
-      state.search = false;
-      state.exclusive = false;
-      state.sales = false;
-      state.soldout = false;
+      state.isSearch = false;
+      state.isExclusive = false;
+      state.isSales = false;
+      state.isSoldout = false;
       state.result = '';
     },
     resetResult: (state) => {
@@ -51,7 +51,7 @@ export const filtersSlice = createSlice({
     recordKeywords: (state, action: { payload: { keywords: string[] } }) => {
       state.keywords = action.payload.keywords;
     },
-    makeWord: (state, action: { payload: { keyword: string } }) => {
+    makeResult: (state, action: { payload: { keyword: string } }) => {
       state.result = action.payload.keyword;
     },
   },
@@ -69,7 +69,7 @@ export const {
   resetFilter,
   resetResult,
   recordKeywords,
-  makeWord,
+  makeResult,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

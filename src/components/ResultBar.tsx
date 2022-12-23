@@ -31,19 +31,19 @@ export default function ResultBar() {
             <span onClick={searchClear}>x</span>
           </Filterword>
         ) : null}
-        {filters.sales === true ? (
+        {filters.isSales === true ? (
           <Filterword>
             <span>세일상품 </span>
             <span onClick={() => dispatch(deactivateSales())}>x</span>
           </Filterword>
         ) : null}
-        {filters.exclusive === true ? (
+        {filters.isExclusive === true ? (
           <Filterword>
             <span>단독상품 </span>
             <span onClick={() => dispatch(deactivateExclusive())}>x</span>
           </Filterword>
         ) : null}
-        {filters.soldout === true ? (
+        {filters.isSoldout === true ? (
           <Filterword>
             <span>품절포함 </span>
             <span onClick={() => dispatch(deactivateSoldout())}>x</span>

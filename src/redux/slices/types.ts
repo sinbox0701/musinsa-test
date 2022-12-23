@@ -1,8 +1,8 @@
 export interface FilterState {
-  search: boolean;
-  sales: boolean;
-  exclusive: boolean;
-  soldout: boolean;
+  isSearch: boolean;
+  isSales: boolean;
+  isExclusive: boolean;
+  isSoldout: boolean;
   keywords: string[];
   result: string;
 }
