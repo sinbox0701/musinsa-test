@@ -18,3 +18,7 @@ export interface GoodsType {
 export interface LayoutProps {
   children: React.ReactNode;
 }
+
+export interface FilterWordProps {
+  children: React.ReactNode;
+}

@@ -14,17 +14,39 @@ export const filtersSlice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
-    changeSearch: (state) => {
-      state.search = !state.search;
+    activateSearch: (state) => {
+      state.search = true;
     },
-    changeSales: (state) => {
-      state.sales = !state.sales;
+    deactivateSearch: (state) => {
+      state.search = false;
     },
-    changeExclusive: (state) => {
-      state.exclusive = !state.exclusive;
+    activateSales: (state) => {
+      state.sales = true;
     },
-    changeSoldout: (state) => {
-      state.soldout = !state.soldout;
+    deactivateSales: (state) => {
+      state.sales = false;
+    },
+    activateExclusive: (state) => {
+      state.exclusive = true;
+    },
+    deactivateExclusive: (state) => {
+      state.exclusive = false;
+    },
+    activateSoldout: (state) => {
+      state.soldout = true;
+    },
+    deactivateSoldout: (state) => {
+      state.soldout = false;
+    },
+    resetFilter: (state) => {
+      state.search = false;
+      state.exclusive = false;
+      state.sales = false;
+      state.soldout = false;
+      state.result = '';
+    },
+    resetResult: (state) => {
+      state.result = '';
     },
     search: (state, action: { payload: { keyword: string } }) => {
       state.keyword = action.payload.keyword;
@@ -35,7 +57,19 @@ export const filtersSlice = createSlice({
   },
 });
 
-export const { changeSearch, changeSales, changeExclusive, changeSoldout, search, makeWord } =
-  filtersSlice.actions;
+export const {
+  activateSearch,
+  deactivateSearch,
+  activateExclusive,
+  deactivateExclusive,
+  activateSales,
+  deactivateSales,
+  activateSoldout,
+  deactivateSoldout,
+  resetFilter,
+  resetResult,
+  search,
+  makeWord,
+} = filtersSlice.actions;
 
 export default filtersSlice.reducer;

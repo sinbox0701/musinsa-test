@@ -1,16 +1,5 @@
 # MUSINSA FRONT END TEST
 
-- [x] 단독 걸치게 표현
-- [x] 상품명 두줄만
-- [x] 할인 가격 줄긋기 + 회색처리
-- [x] 무한 스크롤
-- [x] 필터 토글
-- [x] 필터 조건 적용
-- [x] Soldout 처리
-- [x] 검색바 보이기 / 안보이기
-- [x] 자동 완성
-- [ ] 검색 결과를 포함한 결과 바 만들기
-
-## WARNING
-
-- [x] a태그안에 a태그
+- [ ] Search 토글 -> ResultBar 생성시에 동작 안하게 or Result 초기화
+- [ ] 검색 && 필터링 데이터 안나오는 현상 해결
+- [ ] ResultBar, SearchBar에 대한 마진처리 (둘다 비활성화, ResultBar만 활성화, SearchBar만 활성화, 둘 다 활성화)

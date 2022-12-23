@@ -7,7 +7,9 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="bg-gray-400 flex flex-col justify-center items-center">
       <Header />
-      <div className={`${filters.search ? 'mt-[12rem]' : 'mt-28'}`}>{children}</div>
+      <div className={`${filters.search && filters.result === '' ? 'mt-[12rem]' : 'mt-28'}`}>
+        {children}
+      </div>
     </div>
   );
 }
