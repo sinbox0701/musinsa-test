@@ -10,10 +10,10 @@
 
 ## 구동 빙법
 
-'''
+```
 npm install
 npm run start
-'''
+```
 
 ## 구성
 
