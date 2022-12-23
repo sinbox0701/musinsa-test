@@ -76,17 +76,17 @@ function App() {
   }, [fetch, hasData]);
 
   useEffect(() => {
-    if (filters.exclusive) {
+    if (filters.isExclusive) {
       isExclusive.current = true;
     } else {
       isExclusive.current = false;
     }
-    if (filters.sales) {
+    if (filters.isSales) {
       isSale.current = true;
     } else {
       isSale.current = false;
     }
-    if (filters.soldout) {
+    if (filters.isSoldout) {
       isSoldout.current = true;
     } else {
       isSoldout.current = false;
@@ -99,7 +99,7 @@ function App() {
     setGoodsList([]);
     setHasData(true);
     setPage(0);
-  }, [filters.exclusive, filters.result, filters.sales, filters.search, filters.soldout]);
+  }, [filters.isExclusive, filters.result, filters.isSales, filters.isSoldout]);
 
   useEffect(() => {
     let setKeywords = new Set(keywords);
