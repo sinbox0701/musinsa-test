@@ -8,7 +8,7 @@
 - Axios
 - Tailwind
 
-## 구동 빙법
+## 구동 법
 
 ```
 npm install
