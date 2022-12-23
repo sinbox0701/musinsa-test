@@ -17,11 +17,43 @@ import SearchBar from './SearchBar';
 export default function Header() {
   const dispatch = useAppDispatch();
   const filters = useAppSelector((state) => state.filters);
+  console.log(filters.keywords);
   const onClickSearch = () => {
-    if (filters.search) {
-      dispatch(deactivateSearch());
-    } else dispatch(activateSearch());
-    dispatch(resetResult());
+    if (!(filters.exclusive || filters.sales || filters.soldout)) {
+      if (filters.search) {
+        dispatch(deactivateSearch());
+      } else {
+        dispatch(activateSearch());
+      }
+      dispatch(resetResult());
+    }
+  };
+  const onClickSales = () => {
+    if (filters.search === false || filters.result !== '') {
+      if (filters.sales) {
+        dispatch(deactivateSales());
+      } else {
+        dispatch(activateSales());
+      }
+    }
+  };
+  const onClickExclusive = () => {
+    if (filters.search === false || filters.result !== '') {
+      if (filters.exclusive) {
+        dispatch(deactivateExclusive());
+      } else {
+        dispatch(activateExclusive());
+      }
+    }
+  };
+  const onClickSoldout = () => {
+    if (filters.search === false || filters.result !== '') {
+      if (filters.soldout) {
+        dispatch(deactivateSoldout());
+      } else {
+        dispatch(activateSoldout());
+      }
+    }
   };
 
   return (
@@ -49,9 +81,7 @@ export default function Header() {
             className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
               filters.sales ? 'text-blue-500' : ''
             }`}
-            onClick={() =>
-              filters.sales ? dispatch(deactivateSales()) : dispatch(activateSales())
-            }
+            onClick={onClickSales}
           >
             <span>세일상품</span>
           </div>
@@ -59,9 +89,7 @@ export default function Header() {
             className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
               filters.exclusive ? 'text-blue-500' : ''
             }`}
-            onClick={() =>
-              filters.exclusive ? dispatch(deactivateExclusive()) : dispatch(activateExclusive())
-            }
+            onClick={onClickExclusive}
           >
             <span>단독상품</span>
           </div>
@@ -69,9 +97,7 @@ export default function Header() {
             className={`border rounded-full flex items-center px-4 py-2 mr-1 ${
               filters.soldout ? 'text-blue-500' : ''
             }`}
-            onClick={() =>
-              filters.soldout ? dispatch(deactivateSoldout()) : dispatch(activateSoldout())
-            }
+            onClick={onClickSoldout}
           >
             <span>품절포함</span>
           </div>
@@ -85,7 +111,7 @@ export default function Header() {
           className={`bg-[#E5E5E5] w-full py-4 fixed  flex flex-col items-center justify-center z-10 ${
             checkActivateResult(filters.exclusive, filters.sales, filters.soldout, filters.result)
               ? 'top-[7.5rem]'
-              : 'top-24'
+              : 'top-[5.8rem]'
           }`}
         >
           <SearchBar />

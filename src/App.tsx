@@ -1,29 +1,37 @@
 import axios, { AxiosError } from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Goods from './components/Goods';
 import Layout from './components/Layout';
 import { useAppSelector } from './redux/app/hooks';
+import { recordKeywords } from './redux/slices/filterSlice';
 import { GoodsType } from './types/interface';
 
 function App() {
   const filters = useAppSelector((state) => state.filters);
+  const dispatch = useDispatch();
   const [goodsList, setGoodsList] = useState<GoodsType[]>([]);
+  const [keywords, setKeywords] = useState<string[]>([]);
   const [hasData, setHasData] = useState<boolean>(true);
-  const page = useRef<number>(0);
+  const [page, setPage] = useState<number>(0);
   const observerTargetEl = useRef<HTMLDivElement>(null);
   const isExclusive = useRef<boolean>(false);
   const isSale = useRef<boolean>(false);
   const isSoldout = useRef<boolean>(false);
-  const isSearch = useRef<boolean>(false);
-  const keyword = useRef<string>('');
+  const result = useRef<string>('');
 
   const fetch = useCallback(async () => {
     try {
+      console.log('page: ' + page);
       const { data } = await axios.get(
-        `https://static.msscdn.net/musinsaUI/homework/data/goods${page.current}.json`
+        `https://static.msscdn.net/musinsaUI/homework/data/goods${page}.json`
       );
       if (data) {
         setGoodsList((prev) => [...prev, ...data.data.list]);
+        setKeywords((prev) => [
+          ...prev,
+          ...data.data.list.map((data: GoodsType) => data.goodsName),
+        ]);
         if (isExclusive.current) {
           setGoodsList((prev) => prev.filter((goods) => goods.isExclusive === true));
         }
@@ -33,14 +41,14 @@ function App() {
         if (!isSoldout.current) {
           setGoodsList((prev) => prev.filter((goods) => goods.isSoldOut === false));
         }
-        if (isSearch.current) {
+        if (result.current !== '') {
           setGoodsList((prev) =>
             prev.filter((goods) =>
-              goods.goodsName.toLowerCase().includes(keyword.current.toLowerCase())
+              goods.goodsName.toLowerCase().includes(result.current.toLowerCase())
             )
           );
         }
-        page.current += 1;
+        setPage((prev) => prev + 1);
       }
     } catch (e) {
       if (e instanceof AxiosError) {
@@ -49,7 +57,7 @@ function App() {
         console.log(String(e));
       }
     }
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     if (!observerTargetEl.current || !hasData) return;
@@ -72,59 +80,30 @@ function App() {
     } else {
       isExclusive.current = false;
     }
-    setGoodsList([]);
-    setHasData(true);
-    page.current = 0;
-    if (filters.exclusive === true && isExclusive.current === true) {
-      fetch();
-    }
-  }, [filters.exclusive, fetch]);
-
-  useEffect(() => {
     if (filters.sales) {
       isSale.current = true;
     } else {
       isSale.current = false;
     }
-    setGoodsList([]);
-    setHasData(true);
-    page.current = 0;
-    if (filters.sales === true && isSale.current === true) {
-      fetch();
-    }
-  }, [filters.sales, fetch]);
-
-  useEffect(() => {
     if (filters.soldout) {
       isSoldout.current = true;
     } else {
       isSoldout.current = false;
     }
+    if (filters.result !== '') {
+      result.current = filters.result;
+    } else {
+      result.current = '';
+    }
     setGoodsList([]);
     setHasData(true);
-    page.current = 0;
-    if (filters.soldout === true && isSoldout.current === true) {
-      fetch();
-    }
-  }, [filters.soldout, fetch]);
+    setPage(0);
+  }, [filters.exclusive, filters.result, filters.sales, filters.search, filters.soldout]);
 
   useEffect(() => {
-    if (filters.search) {
-      isSearch.current = true;
-    } else {
-      isSearch.current = false;
-    }
-  }, [filters.search]);
-
-  useEffect(() => {
-    if (keyword.current !== filters.keyword) {
-      keyword.current = filters.keyword;
-      setGoodsList([]);
-      setHasData(true);
-      page.current = 0;
-      fetch();
-    }
-  }, [filters.keyword, fetch]);
+    let setKeywords = new Set(keywords);
+    dispatch(recordKeywords({ keywords: Array.from(setKeywords.values()) }));
+  }, [dispatch, keywords]);
 
   return (
     <Layout>

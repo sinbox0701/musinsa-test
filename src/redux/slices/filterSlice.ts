@@ -6,7 +6,7 @@ const initialState: FilterState = {
   sales: false,
   exclusive: false,
   soldout: false,
-  keyword: '',
+  keywords: [],
   result: '',
 };
 
@@ -48,8 +48,8 @@ export const filtersSlice = createSlice({
     resetResult: (state) => {
       state.result = '';
     },
-    search: (state, action: { payload: { keyword: string } }) => {
-      state.keyword = action.payload.keyword;
+    recordKeywords: (state, action: { payload: { keywords: string[] } }) => {
+      state.keywords = action.payload.keywords;
     },
     makeWord: (state, action: { payload: { keyword: string } }) => {
       state.result = action.payload.keyword;
@@ -68,7 +68,7 @@ export const {
   deactivateSoldout,
   resetFilter,
   resetResult,
-  search,
+  recordKeywords,
   makeWord,
 } = filtersSlice.actions;
 

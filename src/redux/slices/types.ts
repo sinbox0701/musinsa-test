@@ -3,6 +3,6 @@ export interface FilterState {
   sales: boolean;
   exclusive: boolean;
   soldout: boolean;
-  keyword: string;
+  keywords: string[];
   result: string;
 }
