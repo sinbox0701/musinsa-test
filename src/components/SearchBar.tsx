@@ -6,6 +6,7 @@ import { makeWord } from '../redux/slices/filterSlice';
 export default function SearchBar() {
   const dispatch = useAppDispatch();
   const filters = useAppSelector((state) => state.filters);
+
   const [word, setWord] = useState<string>('');
   const [results, setResults] = useState<string[]>([]);
 

@@ -10,10 +10,12 @@ import { GoodsType } from './types/interface';
 function App() {
   const filters = useAppSelector((state) => state.filters);
   const dispatch = useDispatch();
+
   const [goodsList, setGoodsList] = useState<GoodsType[]>([]);
   const [keywords, setKeywords] = useState<string[]>([]);
   const [hasData, setHasData] = useState<boolean>(true);
   const [page, setPage] = useState<number>(0);
+
   const observerTargetEl = useRef<HTMLDivElement>(null);
   const isExclusive = useRef<boolean>(false);
   const isSale = useRef<boolean>(false);
@@ -61,7 +63,7 @@ function App() {
   useEffect(() => {
     if (!observerTargetEl.current || !hasData) return;
 
-    const observer = new IntersectionObserver((entries, observer) => {
+    const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         fetch();
       }

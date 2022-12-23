@@ -17,6 +17,7 @@ import SearchBar from './SearchBar';
 export default function Header() {
   const dispatch = useAppDispatch();
   const filters = useAppSelector((state) => state.filters);
+
   const onClickSearch = () => {
     if (!(filters.exclusive || filters.sales || filters.soldout)) {
       if (filters.search) {
@@ -27,6 +28,7 @@ export default function Header() {
       dispatch(resetResult());
     }
   };
+
   const onClickSales = () => {
     if (filters.search === false || filters.result !== '') {
       if (filters.sales) {
@@ -36,6 +38,7 @@ export default function Header() {
       }
     }
   };
+
   const onClickExclusive = () => {
     if (filters.search === false || filters.result !== '') {
       if (filters.exclusive) {
@@ -45,6 +48,7 @@ export default function Header() {
       }
     }
   };
+
   const onClickSoldout = () => {
     if (filters.search === false || filters.result !== '') {
       if (filters.soldout) {
