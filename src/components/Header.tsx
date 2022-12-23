@@ -9,6 +9,7 @@ import {
   deactivateSales,
   deactivateSearch,
   deactivateSoldout,
+  resetResult,
 } from '../redux/slices/filterSlice';
 import ResultBar from './ResultBar';
 import SearchBar from './SearchBar';
@@ -16,6 +17,12 @@ import SearchBar from './SearchBar';
 export default function Header() {
   const dispatch = useAppDispatch();
   const filters = useAppSelector((state) => state.filters);
+  const onClickSearch = () => {
+    if (filters.search) {
+      dispatch(deactivateSearch());
+    } else dispatch(activateSearch());
+    dispatch(resetResult());
+  };
 
   return (
     <>
@@ -30,9 +37,7 @@ export default function Header() {
                   : 'text-blue-500'
                 : ''
             }`}
-            onClick={() =>
-              filters.search ? dispatch(deactivateSearch()) : dispatch(activateSearch())
-            }
+            onClick={onClickSearch}
           >
             <div>검색</div>
             <svg height="16" viewBox="0 0 48 48" width="16" xmlns="http://www.w3.org/2000/svg">
