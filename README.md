@@ -15,6 +15,8 @@ npm install
 npm run start
 ```
 
+- 디자인은 모바일 기준으로 작성했기 때문에 모바일 화면으로 보시는게 가장 편합니다.
+
 ## 구성
 
 - state 관리 -> redux
